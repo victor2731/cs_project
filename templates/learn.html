@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Learn
+{% endblock %}
+
+{% block main %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Music Theory - Learning Route</h1>
+    <p>Enhance your musical knowledge and skills</p>
+</header>
+
+<section>
+    <h2>1. Music Notation</h2>
+    <ul>
+        <li><strong>Staff and Clefs:</strong> The musical staff consists of five lines and four spaces, with clefs indicating the pitch of the notes. The most common clefs are the treble clef (for higher pitches) and the bass clef (for lower pitches).</li>
+        <li><strong>Notes and Rests:</strong> Notes represent sound and rests represent silence. The duration of each note or rest depends on its type (e.g., whole note, half note, quarter note, etc.).</li>
+    </ul>
+</section>
+
+<section>
+    <h2>2. Scales and Keys</h2>
+    <ul>
+        <li><strong>Major Scales:</strong> A series of notes that follow a specific pattern of whole and half steps. Example: C major scale (C, D, E, F, G, A, B, C).</li>
+        <li><strong>Minor Scales:</strong> These scales are formed by altering the third, sixth, and seventh notes of the major scale. Example: A minor scale (A, B, C, D, E, F, G, A).</li>
+        <li><strong>Key Signatures:</strong> Indicate which notes are sharp or flat throughout a piece, defining the key of the music (e.g., G major has one sharp: F#).</li>
+    </ul>
+</section>
+
+<section>
+    <h2>3. Intervals</h2>
+    <ul>
+        <li><strong>Definition:</strong> The distance between two notes. Common intervals include the unison (same note), major second (whole step), and perfect fifth (five letter names apart).</li>
+        <li><strong>Interval Naming:</strong> Intervals are named by counting the number of letter names between the notes, including the starting note.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>4. Chords and Harmony</h2>
+    <ul>
+        <li><strong>Major and Minor Chords:</strong> A major chord is built by stacking a root, major third, and perfect fifth. A minor chord uses a root, minor third, and perfect fifth.</li>
+        <li><strong>Seventh Chords:</strong> A seventh chord adds a seventh interval to the basic triad. Examples include major seventh, minor seventh, and dominant seventh.</li>
+        <li><strong>Chord Progressions:</strong> A sequence of chords played in a particular order, e.g., I-IV-V-I (C-F-G-C in C major).</li>
+    </ul>
+</section>
+
+<section>
+    <h2>5. Rhythm and Time Signatures</h2>
+    <ul>
+        <li><strong>Time Signatures:</strong> Indicate how many beats are in a measure and which note gets the beat. Example: 4/4 means 4 beats per measure, with a quarter note receiving one beat.</li>
+        <li><strong>Syncopation:</strong> A rhythmic technique where accents are placed on weak beats or offbeats, creating unexpected effects.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>6. Dynamics</h2>
+    <ul>
+        <li><strong>Volume Markings:</strong> Indicate how loud or soft the music should be played (e.g., "p" for soft, "f" for loud).</li>
+        <li><strong>Crescendo and Decrescendo:</strong> Indicate gradual increases or decreases in volume, respectively.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>7. Musical Form</h2>
+    <ul>
+        <li><strong>Binary and Ternary Forms:</strong> Binary form consists of two sections (AB), while ternary form consists of three sections (ABA), with the first and third being similar.</li>
+        <li><strong>Sonata Form:</strong> A complex form often used in classical music, consisting of an exposition, development, and recapitulation.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>8. Ear Training</h2>
+    <ul>
+        <li><strong>Intervals by Ear:</strong> The ability to recognize intervals by sound, such as the difference between a major third and a perfect fifth.</li>
+        <li><strong>Chord Recognition:</strong> Identifying chords and their qualities (major, minor, diminished) by ear.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>9. Tempo and Markings</h2>
+    <ul>
+        <li><strong>Tempo:</strong> Refers to the speed of the music. Terms include "Allegro" (fast), "Andante" (slow), and "Adagio" (very slow).</li>
+        <li><strong>Metronome Markings:</strong> Indicate the number of beats per minute (e.g., 120 bpm).</li>
+    </ul>
+</section>
+
+<section>
+    <h2>10. The Circle of Fifths</h2>
+    <ul>
+        <li><strong>Understanding Key Relationships:</strong> The circle of fifths shows the relationship between 12 keys and how they are related by sharps and flats.</li>
+    </ul>
+</section>
+
+<footer>
+    <p>&copy; 2024 Music Learning Platform | All Rights Reserved</p>
+</footer>
+
+</body>
+
+{% endblock %}

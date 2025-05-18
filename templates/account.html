@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Account
+{% endblock %}
+
+{% block main %}
+
+{% block content %}
+<div class="account-container">
+    <h2>Account Details</h2>
+    {% if details %}
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            {% for detail in details %}
+                <tr>
+                    <td>First Name</td>
+                    <td>{{ detail.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td>{{ detail.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{ detail.email }}</td>
+                </tr>
+                <tr>
+                    <td>Full Name</td>
+                    <td>{{ detail.first_name }} {{ detail.last_name }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No details found for this account.</p>
+    {% endif %}
+</div>
+<style>
+    .account-container {
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 600px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+</style>
+{% endblock %}
+
+{% endblock %}
