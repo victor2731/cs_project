@@ -1,21 +1,15 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    Log In
-{% endblock %}
+{% block title %}Student Login{% endblock %}
 
-{% block main %}
-<h1>Please Login Here</h1>
-    <form action="/login" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="email" placeholder="Email" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
-        </div class="mb-3">
-        <button class="btn btn-primary" type="submit">Log In</button>
-    </form>
-    <div class="mb-3">
-        <p>New user? plese register at top</p>
-    </div>
+{% block content %}
+<h2>🔑 Student Login</h2>
+<form action="/login" method="POST">
+    <label>Email:</label>
+    <input type="email" name="email" required>
+    <label>Password:</label>
+    <input type="password" name="password" required>
+    <button type="submit">Login</button>
+</form>
+<p>New student? <a href="/register">Register here</a></p>
 {% endblock %}

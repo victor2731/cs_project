@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block header %}Welcome, {{ user.first_name }}!{% endblock %}
+
+{% block content %}
+<h3>Your Mentor: {{ teacher.name }}</h3>
+<h4>Instrument: {{ user.instrument }}</h4>
+
+<section>
+    <h2>📚 Learning Content</h2>
+    <p>Access detailed lessons on music theory, notation systems, scales, and tempo.</p>
+    <a href="/learning"><button>Go to Learning Page</button></a>
+</section>
+
+<section>
+    <h2>🏆 Practice & Progress Tracking</h2>
+    <p>Quiz and gamified exercises to sharpen your skills.</p>
+    <a href="/quiz"><button>Take a Quiz</button></a>
+    <a href="/practice"><button>Start Practice</button></a>
+    <h3>🎯 Your Score: {{ user.score }}</h3>
+</section>
+
+
+<section class="card p-3 mb-3">
+    <h2>📢 Tasks and Feedback</h2>
+    {% if tasks %}
+    <table border="1">
+        <tr>
+            <th>Task</th>
+            <th>Due Date</th>
+            <th>Feedback</th>
+            <th>Submit</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td><strong>{{ task.description }}</strong></td> 
+                <td>Due: {{ task.due_date }}</td>
+                <td>{% if task.feedback %}
+                    <p><strong>Feedback:</strong> {{ task.feedback }}</p>
+                {% else %}
+                    <p>No feedback yet.</p>
+                {% endif %}</td>
+                <td>
+                    <form action="/submit_task" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="task_id" value="{{ task.id }}">
+                        <input type="file" name="submission" accept=".png, .jpg, .jpeg, .pdf, .mp3, .mp4">
+                        <button type="submit">Submit Task</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No tasks assigned yet.</p>
+    {% endif %}
+</section>
+
+
+<h2>✉️ Send Doubts to Your Mentor</h2>
+<form action="/student_doubts" method="POST">
+    <textarea name="doubt_text" placeholder="Write your doubts here..."></textarea>
+    <button type="submit">Submit Feedback</button>
+</form>
+
+<h2> your submissions</h2>
+{% if sub %}
+    {% for task in sub %}
+        <table>
+            <tr>
+                <th>S.no</th>
+                <th>tasks</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ task.status }}</td>
+            </tr>
+        </table>
+    {% endfor %}
+{% else %}
+    <p> No submissions </p>
+{% endif %}
+{% endblock %}

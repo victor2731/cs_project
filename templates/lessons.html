@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Music Learning Levels{% endblock %}
+
+{% block header %}🎮 Level-Based Music Learning{% endblock %}
+
+{% block content %}
+<p>Complete levels to unlock advanced lessons!</p>
+
+<section>
+    <h2>🟢 Level 1 - Music Basics</h2>
+    <p>Learn notes, rhythm, and musical symbols.</p>
+    <iframe width="560" height="315" src="https://youtu.be/827jmswqnEA?si=OTfjuCxTuIPM2S5l" frameborder="0" allowfullscreen></iframe>
+    <a href="/quiz1"><button>Take Level 1 Quiz</button></a>
+</section>
+
+<section>
+    <h2>🟡 Level 2 - Instrument Techniques</h2>
+    <p>Master basic techniques for playing piano, guitar, and percussion.</p>
+    <iframe width="560" height="315" src="https://youtu.be/827jmswqnEA?si=OTfjuCxTuIPM2S5l" frameborder="0" allowfullscreen></iframe>
+    <a href="/quiz2"><button>Take Level 2 Quiz</button></a>
+</section>
+
+<section>
+    <h2>🔴 Level 3 - Advanced Performance</h2>
+    <p>Play full songs and refine your musical expression.</p>
+    <iframe width="560" height="315" src="https://youtu.be/827jmswqnEA?si=OTfjuCxTuIPM2S5l" frameborder="0" allowfullscreen></iframe>
+    <a href="/quiz3"><button>Take Level 3 Quiz</button></a>
+</section>
+
+<a href="/dashboard"><button>Back to Dashboard</button></a>
+{% endblock %}

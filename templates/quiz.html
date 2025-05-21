@@ -1,210 +1,23 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    quiz
-{% endblock %}
+{% block title %}Music Quiz{% endblock %}
 
-{% block main %}
-    <h2>Basic quiz on music theory!</h2>
+{% block header %}🎵 Test Your Music Knowledge!{% endblock %}
+
 {% block content %}
-<div class="quiz-container">
-    <h2>Music Quiz</h2>
-    <div id="quiz">
-        <!-- Question will be dynamically loaded here -->
-    </div>
-    <button id="nextBtn" style="display: none;">Next</button>
-    <p id="result" style="display: none;"></p>
-</div>
+<form action="/submit_quiz" method="POST">
+    <label>1. What is the term for the speed of a song?</label>
+    <input type="radio" name="q1" value="rhythm"> Rhythm
+    <input type="radio" name="q1" value="tempo"> Tempo
+    <input type="radio" name="q1" value="pitch"> Pitch
 
-<script>
-    // Array of questions and answers
-    const questions = [
-        {
-            question: "What is the term for the speed of a piece of music?",
-            choices: ["Tempo", "Pitch", "Dynamics", "Harmony"],
-            answer: "Tempo"
-        },
-        {
-            question: "Which clef is used for higher-pitched notes?",
-            choices: ["Bass Clef", "Alto Clef", "Treble Clef", "Tenor Clef"],
-            answer: "Treble Clef"
-        },
-        {
-            question: "How many notes are there in an octave?",
-            choices: ["5", "7", "8", "12"],
-            answer: "12"
-        },
-        {
-            question: "What does 'piano' mean in music dynamics?",
-            choices: ["Soft", "Loud", "Fast", "Slow"],
-            answer: "Soft"
-        },
-        {
-            question: "What is the key signature with one sharp?",
-            choices: ["C Major", "G Major", "D Major", "A Major"],
-            answer: "G Major"
-        },
-        {
-            question: "What interval is also called a perfect fifth?",
-            choices: ["C to G", "C to E", "C to A", "C to F"],
-            answer: "C to G"
-        },
-        {
-            question: "What is the term for a set of notes arranged in ascending or descending order?",
-            choices: ["Scale", "Chord", "Arpeggio", "Interval"],
-            answer: "Scale"
-        },
-        {
-            question: "What type of chord consists of three notes?",
-            choices: ["Triad", "Seventh Chord", "Suspended Chord", "Diminished Chord"],
-            answer: "Triad"
-        },
-        {
-            question: "Which dynamic marking indicates to play very loudly?",
-            choices: ["pp", "mp", "ff", "mf"],
-            answer: "ff"
-        },
-        {
-            question: "Which note is the tonic in the C major scale?",
-            choices: ["C", "D", "E", "F"],
-            answer: "C"
-        }
-    ];
+    <label>2. How many strings does a standard guitar have?</label>
+    <input type="radio" name="q2" value="4"> 4
+    <input type="radio" name="q2" value="6"> 6
+    <input type="radio" name="q2" value="8"> 8
 
-    let currentQuestionIndex = 0;
-    let score = 0;
+    <button type="submit">Submit Quiz</button>
+</form>
 
-    const quizContainer = document.getElementById("quiz");
-    const nextButton = document.getElementById("nextBtn");
-    const resultDisplay = document.getElementById("result");
-
-    function loadQuestion() {
-        const questionData = questions[currentQuestionIndex];
-        quizContainer.innerHTML = `
-            <h3>${questionData.question}</h3>
-            <ul>
-                ${questionData.choices
-                    .map(
-                        (choice, index) =>
-                            `<li><button class="choice" data-answer="${choice}">${index + 1}. ${choice}</button></li>`
-                    )
-                    .join("")}
-            </ul>
-        `;
-
-        // Add click event listeners to choice buttons
-        document.querySelectorAll(".choice").forEach(button => {
-            button.addEventListener("click", handleChoice);
-        });
-    }
-
-    function handleChoice(event) {
-        const selectedAnswer = event.target.getAttribute("data-answer");
-        const correctAnswer = questions[currentQuestionIndex].answer;
-
-        if (selectedAnswer === correctAnswer) {
-            score++;
-            event.target.style.backgroundColor = "green";
-        } else {
-            event.target.style.backgroundColor = "red";
-        }
-
-        // Disable all buttons after answering
-        document.querySelectorAll(".choice").forEach(button => {
-            button.disabled = true;
-        });
-
-        nextButton.style.display = "block";
-    }
-
-    function loadNextQuestion() {
-        currentQuestionIndex++;
-
-        if (currentQuestionIndex < questions.length) {
-            loadQuestion();
-            nextButton.style.display = "none";
-        } else {
-            displayResult();
-        }
-    }
-
-    function displayResult() {
-        quizContainer.innerHTML = "";
-        nextButton.style.display = "none";
-        resultDisplay.style.display = "block";
-        resultDisplay.textContent = `Quiz completed! Your score is ${score} out of ${questions.length}.`;
-    }
-
-    // Initial load
-    loadQuestion();
-
-    // Event listener for the next button
-    nextButton.addEventListener("click", loadNextQuestion);
-</script>
-
-<style>
-    .quiz-container {
-        padding: 20px;
-        margin: 20px auto;
-        max-width: 600px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-        text-align: center;
-        color: #333;
-    }
-
-    h3 {
-        color: #555;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    ul li {
-        margin: 10px 0;
-    }
-
-    .choice {
-        width: 100%;
-        padding: 10px;
-        color: black;
-        background-color: #f1f1f1;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        cursor: pointer;
-        text-align: left;
-    }
-
-    .choice:hover {
-        background-color: #ddd;
-    }
-
-    #nextBtn {
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: #333;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    #nextBtn:hover {
-        background-color: #555;
-    }
-
-    #result {
-        text-align: center;
-        font-size: 18px;
-        color: #333;
-    }
-</style>
-{% endblock %}
-
+<a href="/dashboard"><button>Back to Dashboard</button></a>
 {% endblock %}

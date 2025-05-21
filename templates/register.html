@@ -1,27 +1,39 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    Register
-{% endblock %}
+{% block title %}Music School Registration{% endblock %}
 
-{% block main %}
-    <h1>Register Here!</h1>
-    <form action="/register" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="first_name" placeholder="First name" type="text">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="last_name" placeholder="Last name" type="text">
-        </div>
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="email" placeholder="Email" type="text">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
-        </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Re-type Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Register</button>
-    </form>
+{% block content %}
+<h2>🎵 Register for Music Classes</h2>
+<form action="/register" method="POST">
+    <label>First Name:</label>
+    <input type="text" name="first_name" required>
+    
+    <label>Last Name:</label>
+    <input type="text" name="last_name" required>
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <label>Select Your Mentor:</label>
+    <select name="teacher_id">
+        {% for teacher in teachers %}
+            <option value="{{ teacher.id }}">{{ teacher.name }} - {{ teacher.instruments }}</option>
+        {% endfor %}
+    </select>
+
+   <label>Choose an Instrument:</label>
+    <select name="instrument">
+        {% for teacher in teachers %}
+            {% for instrument in teacher.instruments.split(",") %}
+                <option value="{{ instrument }}">{{ instrument }}</option>
+            {% endfor %}
+        {% endfor %}
+    </select>
+
+
+    <button type="submit">Register</button>
+</form>
 {% endblock %}

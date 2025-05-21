@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Login{% endblock %}
+
+{% block header %}🔑 Teacher Login{% endblock %}
+
+{% block content %}
+<form action="/teacher_login" method="POST">
+    <label>Email:</label>
+    <input type="email" name="email" required>
+    <button type="submit">Login</button>
+</form>
+{% endblock %}

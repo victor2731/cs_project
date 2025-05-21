@@ -1,183 +1,276 @@
-import os
-
-from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+import sqlite3
+from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
-from helpers import apology, login_required, lookup, usd
-import datetime
-# Configure application
+import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = "static/submissions"
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "pdf", "mp3", "mp4"}
+
 app = Flask(__name__)
-
-# Custom filter
-app.jinja_env.filters["usd"] = usd
-
-# Configure session to use filesystem (instead of signed cookies)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///project.db")
-
-
-@app.after_request
-def after_request(response):
-    """Ensure responses aren't cached"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-
-
+# Database connection
+def get_db_connection():
+    conn = sqlite3.connect("music_school.db")
+    conn.row_factory = sqlite3.Row
+    return conn
+# ---------------------- index ----------------------
 @app.route("/")
-@login_required
 def index():
-    """Show portfolio of music"""
-    user_id = session["user_id"]
     return render_template("index.html")
 
-@app.route("/quiz", methods=["GET", "POST"])
-@login_required
-def buy():
-    """basic music quiz"""
-    if request.method == "GET":
-        return render_template("quiz.html")
-   # else:
+# ---------------------- Student Registration ----------------------
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
+    if request.method == "POST":
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        teacher_id = request.form.get("teacher_id")
+        instrument = request.form.get("instrument")
 
+        hashed_password = generate_password_hash(password)
+    
+        cursor.execute(
+            "INSERT INTO users (first_name, last_name, email, password, teacher_id, instrument, score) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+            (first_name, last_name, email, hashed_password, teacher_id, instrument, 0)
+        )
+        conn.commit()
+        conn.close()
+        return redirect("/login")  
 
+    teachers = cursor.execute("SELECT id, name, instruments FROM teachers").fetchall()
+    conn.close()
+    
+    return render_template("register.html", teachers=teachers)
 
-@app.route("/contact")
-@login_required
-def history():
-    """Show history of transactions"""
-    return render_template("contact.html")
-
-
+# ---------------------- Student Login ----------------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Log user in"""
-    """Log user in"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
-    # Forget any user_id
-    session.clear()
-
-    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        # Ensure username was submitted
-        if not request.form.get("email"):
-            return apology("must provide email", 403)
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-        # Ensure password was submitted
-        elif not request.form.get("password"):
-            return apology("must provide password", 403)
+        user = cursor.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
 
-        # Query database for username
-        rows = db.execute(
-            "SELECT * FROM users WHERE email = ?", request.form.get("email")
-        )
+        if user and check_password_hash(user["password"], password):
+            session["user_id"] = user["id"]
+            return redirect("/dashboard")
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(
-            rows[0]["hash"], request.form.get("password")
-        ):
-            return apology("invalid username and/or password", 403)
+        return "Invalid email or password"
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+    return render_template("login.html")
 
-        # Redirect user to home page
-        return redirect("/")
+# ---------------------- Student Dashboard ----------------------
+@app.route("/dashboard")
+def dashboard():
+    if "user_id" not in session:
+        return redirect("/login")
 
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("login.html")
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
+    user = cursor.execute("SELECT * FROM users WHERE id = ?", (session["user_id"],)).fetchone()
+    teacher = cursor.execute("SELECT * FROM teachers WHERE id = ?", (user["teacher_id"],)).fetchone()
+   # Fetch tasks along with feedback
+    tasks = cursor.execute("SELECT id, description, due_date, feedback FROM tasks WHERE student_id = ?", (session["user_id"],)).fetchall()
+    sub = cursor.execute("SELECT id, description, status from tasks WHERE student_id = ?", (session["user_id"],)).fetchall()
+    
+    conn.close()
+    return render_template("dashboard.html", user=user, teacher=teacher, tasks=tasks, sub=sub)
 
+# ---------------------- Teacher Login ----------------------
+@app.route("/teacher_login", methods=["GET", "POST"])
+def teacher_login():
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
+    if request.method == "POST":
+        email = request.form.get("email")
+
+        teacher = cursor.execute("SELECT * FROM teachers WHERE email = ?", (email,)).fetchone()
+
+        if teacher:
+            session["teacher_id"] = teacher["id"]
+            return redirect("/teacher_dashboard")
+
+        return "Invalid email"
+
+    return render_template("teacher_login.html")
+
+# ---------------------- Teacher Dashboard ----------------------
+@app.route("/teacher_dashboard")
+def teacher_dashboard():
+    if "teacher_id" not in session:
+        return redirect("/teacher_login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    teacher = cursor.execute("SELECT * FROM teachers WHERE id = ?", (session["teacher_id"],)).fetchone()
+    students = cursor.execute("SELECT * FROM users WHERE teacher_id = ?", (session["teacher_id"],)).fetchall()
+    student_doubts = cursor.execute("SELECT doubts, first_name, last_name AS student_name FROM users WHERE teacher_id = ?", (session["teacher_id"],)).fetchall()
+    
+    # Fetch tasks including submissions
+    completed_tasks = cursor.execute("""
+        SELECT tasks.id, tasks.description, tasks.submissions, tasks.feedback, 
+               users.first_name || ' ' || users.last_name AS student_name
+        FROM tasks
+        JOIN users ON tasks.student_id = users.id
+        WHERE tasks.status = 'completed' AND tasks.teacher_id = ?
+    """, (session["teacher_id"],)).fetchall()
+
+    conn.close()
+    return render_template("teacher_dashboard.html", teacher=teacher, students=students, completed_tasks=completed_tasks, student_doubts=student_doubts)
+
+# ---------------------- Assign Tasks to Students ----------------------
+@app.route("/assign_task", methods=["POST"])
+def assign_task():
+    if "teacher_id" not in session:
+        return redirect("/teacher_login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    student_id = request.form.get("student_id")
+    description = request.form.get("description")
+    due_date = request.form.get("due_date")
+    feedback_text = request.form.get("feedback_text")
+    
+
+    cursor.execute("INSERT INTO tasks (teacher_id, student_id, description, due_date, feedback) VALUES (?, ?, ?, ?, ?)", (session["teacher_id"], student_id, description, due_date, feedback_text))
+    conn.commit()
+    conn.close()
+
+    return redirect("/teacher_dashboard")
+
+# ---------------------- Logout ----------------------
 @app.route("/logout")
 def logout():
-    """Log user out"""
-    # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
     return redirect("/")
 
 
+# ---------------------- Learning Routes ----------------------
+@app.route("/learning")
+def learning():
+    return render_template("learning.html")
 
-@app.route("/learn", methods=["GET", "POST"])
-@login_required
-def quote():
-    """Get stock quote."""
-    if request.method == "GET":
-        return render_template("learn.html")
+@app.route("/quiz")
+def quiz():
+    return render_template("quiz.html")
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    """Register user"""
-    if request.method == "GET":
-        return render_template("register.html")
-
-    else:
-        first_name = request.form.get("first_name")
-
-        last_name = request.form.get("last_name")
-
-        email = request.form.get("email")
-
-        password = request.form.get("password")
-
-        confirmation = request.form.get("confirmation")
-
-        if not first_name:
-            return apology("please Provide first name")
-
-        if not last_name:
-            return apology("please Provide last name ")
-
-        if not email:
-            return apology("please Provide email")
-
-        if not password:
-            return apology("Please Provide Password")
-
-        if not confirmation:
-            return apology("Please confirm Password")
-
-        if password != confirmation:
-            return apology("Password Do not Match")
-
-        hash = generate_password_hash(password)
-
-        verification = db.execute("select email from users")
-
-        if email in verification[0]["email"]:
-            return apology("Username already exists")
-
-        try:
-            new_user = db.execute("INSERT INTO users (first_name, last_name, email, hash) VALUES (?, ?, ?, ?)", first_name, last_name, email, hash)
-        except:
-            return apology("Username already exists")
-
-        session["user_id"] = new_user
-
-        flash("Registered!")
-
+@app.route("/submit_quiz", methods=["POST"])
+def submit_quiz():
+    if "user_id" not in session:
         return redirect("/login")
 
+    conn = get_db_connection()
+    cursor = conn.cursor()
 
+    score = 0
+    if request.form.get("q1") == "tempo":
+        score += 5
+    if request.form.get("q2") == "6":
+        score += 5
 
+    # Ensure score is correctly stored in SQLite
+    cursor.execute("UPDATE users SET score = score + ? WHERE id = ?", (int(score), session["user_id"],))
 
-@app.route("/account", methods=["GET", "POST"])
-@login_required
-def sell():
-    """Sell shares of stock"""
-    if request.method == "GET":
-        user_id = session["user_id"]
-        details = db.execute("select * from users where id = ?",user_id)
-        return render_template("account.html",details = details)
+    conn.commit()
+    conn.close()
 
+    return redirect("/dashboard")
 
+@app.route("/practice")
+def practice():
+    return render_template("practice.html")
+
+@app.route("/lessons")
+def lessons():
+    return render_template("lessons.html")
+# ---------------------- Student doubts ----------------------
+@app.route("/student_doubts", methods=["POST"])
+def student_doubts():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    doubt_text = request.form.get("doubt_text")
+    student_id = session["user_id"]
+
+    # Update the student's doubts in users table
+    cursor.execute("UPDATE users SET doubts = ? WHERE id = ?", (doubt_text, student_id))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/dashboard")
+# ---------------------- Student Submits Task ----------------------
+@app.route("/submit_task", methods=["POST"])
+def submit_task():
+    if "user_id" not in session:
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    task_id = request.form.get("task_id")
+    file = request.files["submission"]
+
+    if file and file.filename.split(".")[-1] in {"png", "jpg", "jpeg", "pdf", "mp3", "mp4"}:
+        filename = secure_filename(file.filename)
+        filepath = os.path.join("static/submissions", filename)
+        file.save(filepath)
+        
+        print("file: ", filepath)
+
+        # Store the relative file path in the database **correctly**
+        cursor.execute("UPDATE tasks SET submissions = ?, status = 'completed' WHERE id = ?", (filepath, task_id))
+
+        conn.commit()
+        conn.close()
+
+    return redirect("/dashboard")
+
+    # ---------------------- validate submissions ----------------------
+@app.route("/validate_submission", methods=["POST"])
+def validate_submission():
+    if "teacher_id" not in session:
+        return redirect("/teacher_login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    task_id = request.form.get("task_id")
+
+    # Update task validation status
+    cursor.execute("UPDATE tasks SET status = 'validated' WHERE id = ?", (task_id,))
+    
+    # Increase student progress score
+    student_id = cursor.execute("SELECT student_id FROM tasks WHERE id = ?", (task_id,)).fetchone()["student_id"]
+    cursor.execute("UPDATE users SET score = score + 10 WHERE id = ?", (student_id,)).fetchone()
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/teacher_dashboard")
+
+# ---------------------- MAIN ----------------------
+if __name__ == "__main__":
+    app.run(debug=True)

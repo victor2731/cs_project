@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Music Learning Hub{% endblock %}
+
+{% block header %}🎵 Welcome to the Learning Hub 🎵{% endblock %}
+
+{% block content %}
+<p>Explore music theory, notation, and tutorials!</p>
+
+<section>
+    <h2>🎼 Music Theory Basics</h2>
+    <p>Learn about scales, chords, rhythm, and tempo.</p>
+    <a href="/lessons"><button>View Lessons</button></a>
+</section>
+
+<section>
+    <h2>📺 Video Tutorials</h2>
+    <iframe width="560" height="315" src="https://youtu.be/AmC_qmSODEk?si=gCaJgRhc3egxbOiU" frameborder="0" allowfullscreen></iframe>
+</section>
+
+<a href="/dashboard"><button>Back to Dashboard</button></a>
+{% endblock %}

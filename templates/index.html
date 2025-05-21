@@ -1,99 +1,32 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
-{% block title %}
-    Index
-{% endblock %}
+{% block title %}Welcome to Vicky Music Academy{% endblock %}
 
-{% block main %}
-<div>
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Welcome - Vicky's Music School</title>
-      <style>
-          body {
-              font-family: Arial, sans-serif;
-              background-color: #f9f9f9;
-              margin: 0;
-              padding: 0;
-          }
-          header {
-              background-color: #333;
-              color: white;
-              text-align: center;
-              padding: 20px;
-          }
-          .main-content {
-              padding: 20px;
-          }
-          h2 {
-              color: #333;
-          }
-          .learning-route {
-              padding: 20px;
-              background-color: #ffffff;
-              border-radius: 8px;
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          }
-          footer {
-              background-color: #333;
-              color: white;
-              text-align: center;
-              padding: 10px;
-              position: fixed;
-              width: 100%;
-              bottom: 0;
-          }
-          .index-container {
-          height: 100vh; /* Full viewport height */
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-image: url('https://th.bing.com/th/id/OIP.9cDBCXHwL-AT1Iz6zdD41AHaFp?w=216&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7');
-          background-size: cover; /* Ensures the background covers the whole container */
-          background-position: center; /* Centers the background image */
-          background-repeat: no-repeat; /* Prevents the background from repeating */
-      }
+{% block header %}🎵 Welcome to Vicky Music Academy 🎵{% endblock %}
 
-      .welcome-text {
-          text-align: center;
-          color: white;
-          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Adds shadow for text readability */
-      }
+{% block content %}
+<p>Join our talented mentors & start your musical journey today!</p>
 
-      h1 {
-          font-size: 3rem;
-      }
+<section>
+    <h2>Meet Our Mentors</h2>
+    <div class="teacher">
+        <h3>Victor - Pianist</h3>
+        <p>Teaches: Piano, Harmonium, Electric Keyboards</p>
+    </div>
+    <div class="teacher">
+        <h3>Sailaja - Guitarist & Vocalist</h3>
+        <p>Teaches: Electric Guitar, Acoustic Guitar, Violin, Singing</p>
+    </div>
+    <div class="teacher">
+        <h3>David - Percussionist</h3>
+        <p>Teaches: Drums, Tabla</p>
+    </div>
+</section>
 
-      p {
-          font-size: 1.5rem;
-      }
-
-      </style>
-  </head>
-  <body>
-
-  <header>
-      <h1>Welcome to the Vicky's Music </h1>
-      <p>Your journey to mastering music theory starts here!</p>
-  </header>
-  {% block f %}
-  <div class="index-container">
-      <div class="welcome-text">
-        <h2>Welcome</h2>
-      </div>
-  </div>
-
-  <style>
-
-  </style>
-  {% endblock %}
-
-
-  </body>
-  </html>
-
-  </div>
+<section>
+    <h2>Start Learning Today</h2>
+    <a href="/register"><button>Register as a Student</button></a>
+    <a href="/login"><button>Student Login</button></a>
+    <a href="/teacher_login"><button>Teacher Login</button></a>
+</section>
 {% endblock %}
