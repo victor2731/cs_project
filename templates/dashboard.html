@@ -1,86 +1,124 @@
 {% extends "base.html" %}
 
-{% block title %}Student Dashboard{% endblock %}
+{% block title %}Student Dashboard | Vicky Music Academy{% endblock %}
 
-{% block header %}Welcome, {{ user.first_name }}!{% endblock %}
+{% block header %}
+<div class="container mt-6">
+    <h1 class="text-center">👋 Welcome, {{ user.first_name }}!</h1>
+    <h4 class="text-center text-muted">Your Mentor: {{ teacher.name }} | Instrument: {{ user.instrument }}</h4>
+</div>
+{% endblock %}
 
 {% block content %}
-<h3>Your Mentor: {{ teacher.name }}</h3>
-<h4>Instrument: {{ user.instrument }}</h4>
+<h1 style="color:white">MUSIC</h1>
+<h2 style="color:white">MUSIC</h2>
+   <div class="row d-flex align-items-stretch">
+    <!-- Learning Content -->
+    <div class="col-md-8 d-flex">
+        <div class="card p-3 shadow flex-fill">
+            <h2>📚 Learning Content</h2>
+            <p>Learn Basic Music lessons, pitch, tones.</p>
+            <p>Access detailed lessons on music theory, notation systems, scales, and tempo.</p>
+            <p>Know about basic chords, types of chords, and their family.</p>
+            <p>Watch video lectures and tutorials.</p>
+            <a href="/learning" class="btn btn-primary w-100">Go to Learning Page</a>
+        </div>
+    </div>
 
-<section>
-    <h2>📚 Learning Content</h2>
-    <p>Access detailed lessons on music theory, notation systems, scales, and tempo.</p>
-    <a href="/learning"><button>Go to Learning Page</button></a>
-</section>
-
-<section>
-    <h2>🏆 Practice & Progress Tracking</h2>
-    <p>Quiz and gamified exercises to sharpen your skills.</p>
-    <a href="/quiz"><button>Take a Quiz</button></a>
-    <a href="/practice"><button>Start Practice</button></a>
-    <h3>🎯 Your Score: {{ user.score }}</h3>
-</section>
-
-
-<section class="card p-3 mb-3">
-    <h2>📢 Tasks and Feedback</h2>
-    {% if tasks %}
-    <table border="1">
-        <tr>
-            <th>Task</th>
-            <th>Due Date</th>
-            <th>Feedback</th>
-            <th>Submit</th>
-        </tr>
-        {% for task in tasks %}
-            <tr>
-                <td><strong>{{ task.description }}</strong></td> 
-                <td>Due: {{ task.due_date }}</td>
-                <td>{% if task.feedback %}
-                    <p><strong>Feedback:</strong> {{ task.feedback }}</p>
-                {% else %}
-                    <p>No feedback yet.</p>
-                {% endif %}</td>
-                <td>
-                    <form action="/submit_task" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="task_id" value="{{ task.id }}">
-                        <input type="file" name="submission" accept=".png, .jpg, .jpeg, .pdf, .mp3, .mp4">
-                        <button type="submit">Submit Task</button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-        <p>No tasks assigned yet.</p>
-    {% endif %}
-</section>
+    <!-- Practice & Progress Tracking -->
+    <div class="col-md-4 d-flex">
+        <div class="card p-3 shadow flex-fill">
+            <h2>🏆 Practice & Progress Tracking</h2>
+            <p>Quiz and gamified exercises to sharpen your skills.</p>
+            <a href="/quiz" class="btn btn-success w-100">Take a Quiz</a>
+            <a href="/practice" class="btn btn-warning w-100 mt-2">Start Practice</a>
+            <h3 class="mt-3">🎯 Your Score: {{ user.score }}</h3>
+        </div>
+    </div>
+</div>
 
 
-<h2>✉️ Send Doubts to Your Mentor</h2>
-<form action="/student_doubts" method="POST">
-    <textarea name="doubt_text" placeholder="Write your doubts here..."></textarea>
-    <button type="submit">Submit Feedback</button>
-</form>
-
-<h2> your submissions</h2>
-{% if sub %}
-    {% for task in sub %}
-        <table>
-            <tr>
-                <th>S.no</th>
-                <th>tasks</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <td>{{ task.id }}</td>
-                <td>{{ task.description }}</td>
-                <td>{{ task.status }}</td>
-            </tr>
+    <!-- Tasks and Feedback -->
+    <section class="card p-3 shadow mb-4">
+        <h2>📢 Tasks and Feedback</h2>
+        {% if tasks %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="table-dark">
+                    <th>Task</th>
+                    <th>Due Date</th>
+                    <th>Feedback</th>
+                    <th>Submit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td><strong>{{ task.description }}</strong></td> 
+                        <td>{{ task.due_date }}</td>
+                        <td>{% if task.feedback %}
+                            <p><strong>Feedback:</strong> {{ task.feedback }}</p>
+                        {% else %}
+                            <p>No feedback yet.</p>
+                        {% endif %}</td>
+                        <td>
+                            <form action="/submit_task" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="task_id" value="{{ task.id }}">
+                                <input type="file" name="submission" accept=".png, .jpg, .jpeg, .pdf, .mp3, .mp4" class="form-control">
+                                <button type="submit" class="btn btn-primary mt-2 w-100">Submit Task</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
-    {% endfor %}
-{% else %}
-    <p> No submissions </p>
-{% endif %}
+        {% else %}
+            <p>No tasks assigned yet.</p>
+        {% endif %}
+    </section>
+   <div class="row d-flex align-items-stretch">
+    <!-- Student Submissions -->
+    <div class="col-md-8 d-flex">
+        <section class="card p-3 shadow flex-fill">
+            <h2>📌 Your Submissions</h2>
+            {% if sub %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="table-dark">
+                            <th>S.no</th>
+                            <th>Task</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in sub %}
+                        <tr>
+                            <td>{{ task.id }}</td>
+                            <td>{{ task.description }}</td>
+                            <td>{{ task.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No submissions yet.</p>
+            {% endif %}
+        </section>
+    </div>
+
+    <!-- Send Doubts to Mentor -->
+    <div class="col-md-4 d-flex">
+        <section class="card p-3 shadow flex-fill">
+            <h2>✉️ Send Doubts to Your Mentor</h2>
+            <form action="/student_doubts" method="POST">
+                <textarea name="doubt_text" class="form-control" placeholder="Write your doubts here..." rows="3"></textarea>
+                <button type="submit" class="btn btn-secondary mt-2 w-100">Submit Feedback</button>
+            </form>
+        </section>
+    </div>
+</div>
+<!-- Back to Dashboard -->
+    <div class="text-center mt-4">
+        <a href="/logout" class="btn btn-secondary fs-4">Log Out</a>
+    </div>
 {% endblock %}

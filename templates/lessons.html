@@ -1,32 +1,57 @@
 {% extends "base.html" %}
 
-{% block title %}Music Learning Levels{% endblock %}
-
-{% block header %}🎮 Level-Based Music Learning{% endblock %}
-
+{% block title %}Music Learning Levels | Vicky Music Academy{% endblock %}
+{% block header %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">🎮 Level-Based Music Learning</h1>
+    <p class="text-center text-muted">Complete levels to unlock advanced lessons!</p>
+</div>
+{% endblock %}
 {% block content %}
-<p>Complete levels to unlock advanced lessons!</p>
+<h1 style="color:white">MUSIC</h1>
+<h2 style="color:white">MUSIC</h2>
+    <!-- Level 1 - Music Basics -->
+    <div class="card p-3 text-center shadow mb-4">
+        <h2>🟢 Level 1 - Music Basics</h2>
+        <p>Understand fundamental music concepts, including:</p>
+        <ul>
+            <li>🎼 **Musical Notes** - Learn the seven basic notes (A, B, C, D, E, F, G).</li>
+            <li>🎵 **Rhythm & Timing** - Discover how beats create patterns in music.</li>
+            <li>📖 **Musical Symbols** - Recognize symbols like clefs, sharps, and flats.</li>
+            <li>🔢 **Time Signatures** - Understand counts in common rhythms (4/4, 3/4, etc.).</li>
+        </ul>
+        <a href="https://simple.wikipedia.org/wiki/Music" class="btn btn-primary w-100 mt-2">Read Full Topics</a>
+    </div>
 
-<section>
-    <h2>🟢 Level 1 - Music Basics</h2>
-    <p>Learn notes, rhythm, and musical symbols.</p>
-    <iframe width="560" height="315" src="https://youtu.be/827jmswqnEA?si=OTfjuCxTuIPM2S5l" frameborder="0" allowfullscreen></iframe>
-    <a href="/quiz1"><button>Take Level 1 Quiz</button></a>
-</section>
+    <!-- Level 2 - Instrument Techniques -->
+    <div class="card p-3 shadow mb-4">
+        <h2>🟡 Level 2 - Instrument Techniques</h2>
+        <p>Master essential techniques for playing different instruments:</p>
+        <ul>
+            <li>🎸 **Guitar Basics** - Understand chords, finger placement, and strumming.</li>
+            <li>🎹 **Piano Fundamentals** - Learn how to play scales and harmonies.</li>
+            <li>🥁 **Percussion Techniques** - Explore drum patterns and hand coordination.</li>
+            <li>🎤 **Vocal Control** - Develop tone, pitch accuracy, and breath control.</li>
+        </ul>
+        <a href="https://simple.wikipedia.org/wiki/Music" class="btn btn-primary w-100 mt-2">Read Full Topics</a>
+    </div>
 
-<section>
-    <h2>🟡 Level 2 - Instrument Techniques</h2>
-    <p>Master basic techniques for playing piano, guitar, and percussion.</p>
-    <iframe width="560" height="315" src="https://youtu.be/827jmswqnEA?si=OTfjuCxTuIPM2S5l" frameborder="0" allowfullscreen></iframe>
-    <a href="/quiz2"><button>Take Level 2 Quiz</button></a>
-</section>
+    <!-- Level 3 - Advanced Performance -->
+    <div class="card p-3 shadow">
+        <h2>🔴 Level 3 - Advanced Performance</h2>
+        <p>Refine your music skills with these advanced lessons:</p>
+        <ul>
+            <li>🎶 **Song Composition** - Create melodies and structure musical pieces.</li>
+            <li>🎭 **Expressive Playing** - Master dynamics, articulation, and performance style.</li>
+            <li>🎧 **Music Production** - Learn about recording techniques and digital mixing.</li>
+            <li>💡 **Creative Improvisation** - Understand how to improvise confidently.</li>
+        </ul>
+        <a href="https://simple.wikipedia.org/wiki/Music" class="btn btn-primary w-100 mt-2">Read Full Topics</a>
+    </div>
 
-<section>
-    <h2>🔴 Level 3 - Advanced Performance</h2>
-    <p>Play full songs and refine your musical expression.</p>
-    <iframe width="560" height="315" src="https://youtu.be/827jmswqnEA?si=OTfjuCxTuIPM2S5l" frameborder="0" allowfullscreen></iframe>
-    <a href="/quiz3"><button>Take Level 3 Quiz</button></a>
-</section>
-
-<a href="/dashboard"><button>Back to Dashboard</button></a>
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-4">
+        <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
 {% endblock %}

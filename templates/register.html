@@ -1,39 +1,74 @@
 {% extends "base.html" %}
 
-{% block title %}Music School Registration{% endblock %}
+{% block title %}Registration | Vicky Music Academy{% endblock %}
 
-{% block content %}
-<h2>🎵 Register for Music Classes</h2>
-<form action="/register" method="POST">
-    <label>First Name:</label>
-    <input type="text" name="first_name" required>
+<body class="bodi">
+    {% block header %}
+        <h2>🎵 Register for Music Classes</h2>
+    {% endblock %}
+
+    {% block content %}
     
-    <label>Last Name:</label>
-    <input type="text" name="last_name" required>
+        <h1 style="color: white;"> Muiiz</h1>
+        <h2 style="color: white;"> Muiiz</h2>
+    
+    <div class="row justify-content-end kalifa">
+        <div class="col-sm-5">
+            <form action="/register" method="POST" class="p-4 bg-light rounded shadow">
+                
+                <!-- First Name -->
+                <div class="mb-3">
+                    <label class="form-label"><b>First Name: </b><input type="text" name="first_name" class="form-control" required></label>
+                    
+                </div>
 
-    <label>Email:</label>
-    <input type="email" name="email" required>
+                <!-- Last Name -->
+                <div class="mb-3">
+                    <label class="form-label"><b>Last Name: </b><input type="text" name="last_name" class="form-control" required></label>
+                    
+                </div>
 
-    <label>Password:</label>
-    <input type="password" name="password" required>
+                <!-- Email -->
+                <div class="mb-1">
+                    <label class="form-label"><b>Email: </b><input type="email" name="email" class="form-control" required></label>
+                </div>
 
-    <label>Select Your Mentor:</label>
-    <select name="teacher_id">
-        {% for teacher in teachers %}
-            <option value="{{ teacher.id }}">{{ teacher.name }} - {{ teacher.instruments }}</option>
-        {% endfor %}
-    </select>
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label"><b>Password:</b><input type="password" name="password" class="form-control" required></label>
+                    
+                </div>
 
-   <label>Choose an Instrument:</label>
-    <select name="instrument">
-        {% for teacher in teachers %}
-            {% for instrument in teacher.instruments.split(",") %}
-                <option value="{{ instrument }}">{{ instrument }}</option>
-            {% endfor %}
-        {% endfor %}
-    </select>
+                <!-- Select Mentor -->
+                <div class="mb-3">
+                    <label class="form-label"><b>Select Your Mentor: </b>
+                    <select name="teacher_id" class="form-select">
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher.id }}">{{ teacher.name }} - {{ teacher.instruments }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                </div>
 
+                <!-- Choose an Instrument -->
+                <div class="mb-3">
+                    <label class="form-label"><b>Choose an Instrument:</b>
+                    <select name="instrument" class="form-select">
+                        {% for teacher in teachers %}
+                            {% for instrument in teacher.instruments.split(",") %}
+                                <option value="{{ instrument }}">{{ instrument }}</option>
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
+                </label>
+                </div>
 
-    <button type="submit">Register</button>
-</form>
-{% endblock %}
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>

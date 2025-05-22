@@ -1,86 +1,114 @@
 {% extends "base.html" %}
 
-{% block title %}Teacher Dashboard{% endblock %}
+{% block title %}Teacher Dashboard | Vicky Music Academy{% endblock %}
 
-{% block header %}Welcome, {{ teacher.name }}!{% endblock %}
-
+{% block header %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">👋 Welcome, {{ teacher.name }}!</h1>
+    <h4 class="text-center text-muted">Your Instruments: {{ teacher.instruments }}</h4>
+</div>
+{% endblock %}
 {% block content %}
-<h3>Your Instruments: {{ teacher.instruments }}</h3>
-
-<section>
-    <h2>📚 Your Students</h2>
-    {% if students %}
-        <table border="1">
-            <tr>
-                <th>Student Name</th>
-                <th>Instrument</th>
-                <th>Progress Score</th>
-                <th>Assign Task</th>
-            </tr>
-            {% for student in students %}
-            <tr>
-                <td>{{ student.first_name }} {{ student.last_name }}</td>
-                <td>{{ student.instrument }}</td>
-                <td>{{ student.score }}</td>
-                <td>
-                    <form action="/assign_task" method="POST">
-                        <input type="hidden" name="student_id" value="{{ student.id }}">
-                        <input type="text" name="description" placeholder="Enter task">
-                        <input type="date" name="due_date"> 
-                        <textarea name="feedback_text" placeholder="Write your doubts here..."></textarea>
-                        <button type="submit">assign_task</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
+<h1 style="color: white"> MUSIC </h1>
+<h2 style="color: white"> MUSIC </h2>
+    <!-- Students Table -->
+    <div class="card p-3 shadow mb-4">
+        <h2>📚 Your Students</h2>
+        {% if students %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="table-dark">
+                    <th>Student Name</th>
+                    <th>Instrument</th>
+                    <th>Progress Score</th>
+                    <th>Assign Task</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.first_name }} {{ student.last_name }}</td>
+                    <td>{{ student.instrument }}</td>
+                    <td>{{ student.score }}</td>
+                    <td>
+                        <form action="/assign_task" method="POST" class="p-2 bg-light rounded">
+                            <input type="hidden" name="student_id" value="{{ student.id }}">
+                            <input type="text" name="description" class="form-control mb-2" placeholder="Enter task">
+                            <input type="date" name="due_date" class="form-control mb-2">
+                            <textarea name="feedback_text" class="form-control mb-2" placeholder="Feedback..."></textarea>
+                            <button type="submit" class="btn btn-primary w-100">Assign Task</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
-    {% else %}
-        <p>No students assigned yet.</p>
-    {% endif %}
-</section>
-<h2>📢 Validate Student Submissions</h2>
-{% if completed_tasks %}
-<table border="1">
-    <tr>
-        <th>Task ID</th>
-        <th>Description</th>
-        <th>Student Name</th>
-        <th>Submission</th>
-        <th>Validate</th>
-    </tr>
-    {% for task in completed_tasks %}
-        <tr>
-            <td>{{ task.id }}</td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.student_name }}</td>
-            <td>
-                {% if task.submissions %}
-                    <a href="{{ task.submissions }}" target="_blank">View Submission</a>
-                {% else %}
-                    <p>No submission yet.</p>
-                {% endif %}
-            </td>
-            <td>
-                <form action="/validate_submission" method="POST">
-                    <input type="hidden" name="task_id" value="{{ task.id }}">
-                    <button type="submit">Mark as Validated</button>
-                </form>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-{% else %}
-    <p>No completed tasks yet.</p>
-{% endif %}
+        {% else %}
+            <p>No students assigned yet.</p>
+        {% endif %}
+    </div>
 
-<h2>📢 Doubts from Students</h2>
-{% if student_doubts %}
-    <ul>
-        {% for entry in student_doubts %}
-            <li><strong>{{ entry.doubts }}</strong> - Sent by {{ entry.student_name }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No Doubts received yet.</p>
-{% endif %}
+    <!-- Validate Student Submissions -->
+    <div class="card p-3 shadow mb-4">
+        <h2>📢 Validate Student Submissions</h2>
+        {% if completed_tasks %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="table-dark">
+                    <th>Task ID</th>
+                    <th>Description</th>
+                    <th>Student Name</th>
+                    <th>Submission</th>
+                    <th>Validate</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in completed_tasks %}
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.student_name }}</td>
+                    <td>
+                        {% if task.submissions %}
+                            <a href="{{ task.submissions }}" target="_blank" class="btn btn-outline-info w-100">View Submission</a>
+                        {% else %}
+                            <p>No submission yet.</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form action="/validate_submission" method="POST">
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            <button type="submit" class="btn btn-success w-100">Mark as Validated</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>No completed tasks yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Student Doubts -->
+    <div class="card p-3 shadow">
+        <h2>📢 Doubts from Students</h2>
+        {% if student_doubts %}
+        <ul class="list-group">
+            {% for entry in student_doubts %}
+            <li class="list-group-item">
+                <strong>{{ entry.doubts }}</strong> - Sent by {{ entry.student_name }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>No doubts received yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-4">
+        <a href="/logout" class="btn btn-secondary fs-4">Log Out</a>
+    </div>
+
 {% endblock %}

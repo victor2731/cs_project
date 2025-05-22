@@ -1,26 +1,41 @@
 {% extends "base.html" %}
 
-{% block title %}Practice Sessions{% endblock %}
-
-{% block header %}🎼 Improve Your Skills!{% endblock %}
-
+{% block title %}Practice Sessions | Vicky Music Academy{% endblock %}
+{% block header %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">🎼 Improve Your Skills!</h1>
+    <p class="text-center text-muted fs-5">Practice exercises tailored for your instrument.</p>
+</div>
+{% endblock %}
 {% block content %}
-<p>Practice exercises tailored for your instrument.</p>
+<h1 style="color: white"> MUSIC </h1>
+<h2 style="color: white"> MUSIC </h2>
+    <div class="row">
+        <!-- Sheet Music Viewer -->
+        <div class="col-md-8 d-flex">
+            <div class="card p-3 shadow flex-fill text-center">
+                <h2>📜 Sheet Music & Exercises</h2>
+                <p>View sheet music directly and start practicing!</p>
+                <iframe src="/static/musicsheet.pdf" class="rounded shadow" width="100%" height="400px"></iframe>
+            </div>
+        </div>
 
-<section>
-    <h2>📜 Sheet Music & Exercises</h2>
-    <p>Download practice sheets and start improving!</p>
-    <a href="/static/musicSheet.png"><button>Download Sheet Music</button></a>
-</section>
+        <!-- Play-Along Tracks -->
+        <div class="col-md-4 d-flex">
+            <div class="card p-3 shadow flex-fill text-center">
+                <h2>🎶 Play-Along Tracks</h2>
+                <p>Jam with background music to refine timing.</p>
+                <audio controls class="w-100 mt-2">
+                    <source src="/static/music.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
 
-<section>
-    <h2>🎶 Play-Along Tracks</h2>
-    <p>Jam with background music to refine timing.</p>
-    <audio controls>
-        <source src="/static/song.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-</section>
-
-<a href="/dashboard"><button>Back to Dashboard</button></a>
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-4">
+        <a href="/dashboard" class="btn btn-secondary fs-4">🔙 Back to Dashboard</a>
+    </div>
+</div>
 {% endblock %}

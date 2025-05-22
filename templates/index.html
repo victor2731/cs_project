@@ -1,32 +1,158 @@
+
 {% extends "base.html" %}
 
 {% block title %}Welcome to Vicky Music Academy{% endblock %}
 
-{% block header %}🎵 Welcome to Vicky Music Academy 🎵{% endblock %}
+<body>
+    <!-- Navbar -->
+     {% block header %}
+        <a class="navbar-brand" href="/"><h1>🎵Vicky Music School</h1></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto" id="navbarNav">
+                <li class="nav-item"><a class="nav-link" href="#OurExperts">OurExperts</a></li>
+                <li class="nav-item"><a class="nav-link" href="#About">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#Contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register"><button class="btn btn-primary">Register</button></a></li>
+                <li class="nav-item"><a class="nav-link" href="/login"><button class="btn btn-primary">Login</button></a></li>
+                <li class="nav-item"><a class="nav-link" href="/teacher_login"><button class="btn btn-primary">TeacherLogin</button></a></li>
+            </ul>
+        </div>
+    {% endblock %}
+   
+     {% block content %}
+     <!-- Hero Section -->
+  
+    <!-- Image Carousel -->
+    <section class="container-fluid">
+        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="static/pic1.png" class="d-block w-100 car" alt="Image 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="static/pic2.png" class="d-block w-100 car" alt="Image 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="static/pic3.png" class="d-block w-100 car" alt="Image 3">
+                </div>
+                <div class="carousel-item">
+                    <img src="static/pic4.png" class="d-block w-100 car" alt="Image 4">
+                </div>
+            </div>
 
-{% block content %}
-<p>Join our talented mentors & start your musical journey today!</p>
+            <!-- Navigation Buttons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
 
-<section>
-    <h2>Meet Our Mentors</h2>
-    <div class="teacher">
-        <h3>Victor - Pianist</h3>
-        <p>Teaches: Piano, Harmonium, Electric Keyboards</p>
+    <!-- Courses Section -->
+    <section class="container text-center mt-5" id="OurExperts">
+        <div>
+             <h2><b>🎼 Meet Our Experts</b></h2>
+        </div>
+       
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="static/guitarist.png" class="card-img-top tea" alt="Guitar">
+                    <div class="card-body">
+                        <h5 class="card-title">Sailaja - guitarist and vocalist</h5>
+                        <p class="card-text">Learn guitar and singing with expert guidance.</p>
+                        <a href="/register" class="btn btn-primary">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="static/pianist.png" class="card-img-top tea" alt="Piano">
+                    <div class="card-body">
+                        <h5 class="card-title">Victot - Pianist</h5>
+                        <p class="card-text">Master piano techniques from beginner to advanced levels.</p>
+                        <a href="/register" class="btn btn-primary">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="static/drumer.png" class="card-img-top tea" alt="Violin">
+                    <div class="card-body">
+                        <h5 class="card-title">Satish - Drummer</h5>
+                        <p class="card-text">Learn classical and contemporary violin styles.</p>
+                        <a href="/register" class="btn btn-primary">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+<section id="About" class="container text-center mt-5">
+    <div>
+        <h2><b>🎵 About Us</b></h2> 
     </div>
-    <div class="teacher">
-        <h3>Sailaja - Guitarist & Vocalist</h3>
-        <p>Teaches: Electric Guitar, Acoustic Guitar, Violin, Singing</p>
-    </div>
-    <div class="teacher">
-        <h3>David - Percussionist</h3>
-        <p>Teaches: Drums, Tabla</p>
+   
+    <p class="lead">Welcome to <strong>Music School</strong>, where passion meets excellence! Our mission is to provide high-quality music education tailored to every learner.</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <img src="static/about.png" class="img-fluid rounded" alt="About Music School">
+        </div>
+        <div class="col-md-6 text-start">
+            <h3>Why Choose Us?</h3>
+            <ul class="list-unstyled">
+                <li>✅ **Expert Instructors** with years of experience</li>
+                <li>✅ **Flexible Learning Options** (Online & Offline)</li>
+                <li>✅ **Interactive & Gamified Lessons**</li>
+                <li>✅ **Personalized Mentorship for Every Student**</li>
+            </ul>
+        </div>
     </div>
 </section>
 
-<section>
-    <h2>Start Learning Today</h2>
-    <a href="/register"><button>Register as a Student</button></a>
-    <a href="/login"><button>Student Login</button></a>
-    <a href="/teacher_login"><button>Teacher Login</button></a>
+<!-- Contact Section -->
+<section class="bg-dark text-white text-center py-4" id="Contact">
+    <div class="container">
+        <h2>📞 Contact Us</h2>
+        <p>Reach out to us via social media or email!</p>
+        
+        <!-- Social Media Icons -->
+        <div class="d-flex justify-content-center mt-3">
+            <a href="https://facebook.com/yourprofile" class="btn btn-outline-light mx-2">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/yourprofile" class="btn btn-outline-light mx-2">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://instagram.com/yourprofile" class="btn btn-outline-light mx-2">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:vim4679@email.com" class="btn btn-outline-light mx-2">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+         <p>&copy; 2025 Music School | All Rights Reserved</p>
+    </div>
 </section>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener("click", function(event) {
+        let navbar = document.getElementById("navbarMenu");
+        let toggler = document.querySelector(".navbar-toggler");
+
+        // If navbar is open and user clicks outside, close it
+        if (navbar.classList.contains("show") && !navbar.contains(event.target) && !toggler.contains(event.target)) {
+            toggler.click(); // Simulates button click to close the menu
+        }
+});
+</script>
+</body>
 {% endblock %}

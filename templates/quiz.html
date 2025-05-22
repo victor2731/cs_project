@@ -1,23 +1,91 @@
 {% extends "base.html" %}
 
-{% block title %}Music Quiz{% endblock %}
+{% block title %}Music Quiz | Vicky Music Academy{% endblock %}
+{% block header %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5 fw-bold">🎵 Test Your Music Knowledge!</h1>
+    <p class="text-center text-muted fs-5">Select the correct answers by clicking the buttons!</p>
+</div>
 
-{% block header %}🎵 Test Your Music Knowledge!{% endblock %}
+{% endblock %}
 
 {% block content %}
-<form action="/submit_quiz" method="POST">
-    <label>1. What is the term for the speed of a song?</label>
-    <input type="radio" name="q1" value="rhythm"> Rhythm
-    <input type="radio" name="q1" value="tempo"> Tempo
-    <input type="radio" name="q1" value="pitch"> Pitch
 
-    <label>2. How many strings does a standard guitar have?</label>
-    <input type="radio" name="q2" value="4"> 4
-    <input type="radio" name="q2" value="6"> 6
-    <input type="radio" name="q2" value="8"> 8
+    <form action="/submit_quiz" method="POST" class="p-4 bg-light rounded shadow">
+        <h1 style="color: white"> MUSIC </h1>
+<h2 style="color: white"> MUSIC </h2>
+        <!-- Question 1 -->
+        <div class="mb-4">
+            <label class="form-label fs-4 fw-bold">1. What is the term for the speed of a song?</label>
+                <div class="d-grid gap-2">
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="rhythm" class="d-none"> 🎵 Rhythm
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="tempo" class="d-none"> ⏳ Tempo
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="pitch" class="d-none"> 🔊 Pitch
+                    </label>
+                </div>
+        </div>
 
-    <button type="submit">Submit Quiz</button>
-</form>
 
-<a href="/dashboard"><button>Back to Dashboard</button></a>
+        <!-- Question 2 -->
+        <div class="mb-4">
+            <label class="form-label fs-4 fw-bold">2. How many strings does a standard guitar have?</label>
+                <div class="d-grid gap-2">
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="rhythm" class="d-none"> 🎸 4
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="tempo" class="d-none"> 🎸 6
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="pitch" class="d-none"> 🎸 8
+                    </label>
+                </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="mb-4">
+            <label class="form-label fs-4 fw-bold">3. What is the purpose of a metronome?</label>
+                <div class="d-grid gap-2">
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="rhythm" class="d-none"> 🎼 Change Pitch
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="tempo" class="d-none">⏳ Keep Tempo
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="pitch" class="d-none"> 🔊 Amplify Sound
+                    </label>
+                </div>
+        </div>
+        <!-- Question 4 -->
+        <div class="mb-4">
+            <label class="form-label fs-4 fw-bold">4. Which musical family does the violin belong to?</label>
+                <div class="d-grid gap-2">
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="rhythm" class="d-none"> 🥁 Percussion
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="tempo" class="d-none"> 🎺 Brass
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="q1" value="pitch" class="d-none"> 🎻 Strings
+                    </label>
+                </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary w-100 fs-4">✅ Submit Quiz</button>
+        </div>
+    </form>
+
+    <!-- Back to Dashboard -->
+    <div class="text-center mt-3">
+        <a href="/dashboard" class="btn btn-secondary fs-4">🔙 Back to Dashboard</a>
+    </div>
+
 {% endblock %}

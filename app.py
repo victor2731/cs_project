@@ -2,7 +2,7 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from helpers import login_required
 import os
 from werkzeug.utils import secure_filename
 
@@ -76,6 +76,7 @@ def login():
 
 # ---------------------- Student Dashboard ----------------------
 @app.route("/dashboard")
+@login_required
 def dashboard():
     if "user_id" not in session:
         return redirect("/login")
@@ -94,6 +95,7 @@ def dashboard():
 
 # ---------------------- Teacher Login ----------------------
 @app.route("/teacher_login", methods=["GET", "POST"])
+@login_required
 def teacher_login():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -113,6 +115,7 @@ def teacher_login():
 
 # ---------------------- Teacher Dashboard ----------------------
 @app.route("/teacher_dashboard")
+@login_required
 def teacher_dashboard():
     if "teacher_id" not in session:
         return redirect("/teacher_login")
@@ -138,6 +141,7 @@ def teacher_dashboard():
 
 # ---------------------- Assign Tasks to Students ----------------------
 @app.route("/assign_task", methods=["POST"])
+@login_required
 def assign_task():
     if "teacher_id" not in session:
         return redirect("/teacher_login")
@@ -166,14 +170,16 @@ def logout():
 
 # ---------------------- Learning Routes ----------------------
 @app.route("/learning")
+@login_required
 def learning():
     return render_template("learning.html")
 
 @app.route("/quiz")
+@login_required
 def quiz():
     return render_template("quiz.html")
-
 @app.route("/submit_quiz", methods=["POST"])
+@login_required
 def submit_quiz():
     if "user_id" not in session:
         return redirect("/login")
@@ -181,14 +187,24 @@ def submit_quiz():
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    score = 0
-    if request.form.get("q1") == "tempo":
-        score += 5
-    if request.form.get("q2") == "6":
-        score += 5
+    # Correct answers & scoring
+    correct_answers = {
+        "q1": "tempo",        # Speed of a song
+        "q2": "6",            # Guitar strings
+        "q3": "Keep tempo",   # Metronome use
+        "q4": "Strings",      # Violin belongs to Strings family
+        "q5": "Raises pitch", # Sharp symbol effect
+        "q6": "Staff",        # Five horizontal lines in music notation
+        "q7": "Hold a note longer", # Fermata meaning
+    }
 
-    # Ensure score is correctly stored in SQLite
-    cursor.execute("UPDATE users SET score = score + ? WHERE id = ?", (int(score), session["user_id"],))
+    score = 0
+    for question, answer in correct_answers.items():
+        if request.form.get(question) == answer:
+            score += 5  # Each correct answer adds 5 points
+
+    # Update the user's score in the database
+    cursor.execute("UPDATE users SET score = score + ? WHERE id = ?", (score, session["user_id"]))
 
     conn.commit()
     conn.close()
@@ -196,14 +212,17 @@ def submit_quiz():
     return redirect("/dashboard")
 
 @app.route("/practice")
+@login_required
 def practice():
     return render_template("practice.html")
 
 @app.route("/lessons")
+@login_required
 def lessons():
     return render_template("lessons.html")
 # ---------------------- Student doubts ----------------------
 @app.route("/student_doubts", methods=["POST"])
+@login_required
 def student_doubts():
     if "user_id" not in session:
         return redirect("/login")
@@ -223,6 +242,7 @@ def student_doubts():
     return redirect("/dashboard")
 # ---------------------- Student Submits Task ----------------------
 @app.route("/submit_task", methods=["POST"])
+@login_required
 def submit_task():
     if "user_id" not in session:
         return redirect("/login")
@@ -250,6 +270,7 @@ def submit_task():
 
     # ---------------------- validate submissions ----------------------
 @app.route("/validate_submission", methods=["POST"])
+@login_required
 def validate_submission():
     if "teacher_id" not in session:
         return redirect("/teacher_login")
@@ -273,4 +294,4 @@ def validate_submission():
 
 # ---------------------- MAIN ----------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

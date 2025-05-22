@@ -6,11 +6,19 @@ body {
     padding: 20px;
 }
 
+.bodi {
+    background: url("https://bing.com/th/id/BCO.456eb451-4f05-4b0a-8308-a7073950f2c1.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+
 header {
     background-color: #2a9d8f;
+    text-align: center;
     color: white;
     padding: 20px;
     border-radius: 10px;
+    height: 100px;
 }
 
 section {
@@ -82,5 +90,66 @@ button {
 }
 
 button:hover {
-    background-color: #d9534f;
+    background-color: #b51a1500;
+}
+
+#imageCarousel .carousel-item {
+    transition: transform 1s ease-in-out; /* Smooth sliding effect */
+}
+/* Hero Section */
+header {
+    background: url("static/guitar.jpg") no-repeat center center/cover;
+}
+
+/* Cards Styling */
+.card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    font-size: 14px;
+}
+
+.navbar-toggler {
+    position: absolute;
+    width: 15%;
+    top: 10px;
+    right: 15px;
+}
+.navbar-brand {
+    position: relative;
+    width: 30%;
+}
+html {
+    scroll-behavior: smooth;
+}
+.car {
+    max-width: 100%; /* Limits image width */
+    height: 700px; /* Maintains aspect ratio */
+}
+.tea {
+    max-width: 500px; /* Limits image width */
+    height: 500px; /* Maintains aspect ratio */
+}
+.kalifa {
+    background: url("https://bing.com/th/id/BCO.456eb451-4f05-4b0a-8308-a7073950f2c1.png") no-repeat center center; /* Semi-transparent white */
+    background-size: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.o {
+    height: 60px;
+}
+
+.btn-outline-primary:has(input:checked) {
+    background-color: #007bff !important;
+    color: white !important;
+    border-color: #0056b3;
 }

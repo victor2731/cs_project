@@ -1,13 +1,33 @@
 {% extends "base.html" %}
 
-{% block title %}Teacher Login{% endblock %}
+{% block title %}Teacher Login | Vicky Music Academy{% endblock %}
 
-{% block header %}🔑 Teacher Login{% endblock %}
+{%block header%}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">🔑 Teacher Login</h1>
+    <p class="text-center text-muted fs-5">Access your dashboard to manage classes and student progress.</p>
+</div>
+{% endblock %}
 
 {% block content %}
-<form action="/teacher_login" method="POST">
-    <label>Email:</label>
-    <input type="email" name="email" required>
-    <button type="submit">Login</button>
-</form>
+<h1 style="color: white"> MUSIC </h1>
+<h2 style="color: white"> MUSIC </h2>
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <form action="/teacher_login" method="POST" class="p-4 bg-light rounded shadow">
+                
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label"><b>Email:</b></label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-100 fs-5">Login</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
 {% endblock %}

@@ -1,22 +1,37 @@
 {% extends "base.html" %}
 
-{% block title %}Music Learning Hub{% endblock %}
-
-{% block header %}🎵 Welcome to the Learning Hub 🎵{% endblock %}
-
+{% block title %}Music Learning Hub | Vicky Music Academy{% endblock %}
+{% block header %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">🎵 Welcome to the Learning Hub 🎵</h1>
+    <p class="text-center text-muted">Explore music theory, notation, and tutorials!</p>
+</div>
+{% endblock %}
 {% block content %}
-<p>Explore music theory, notation, and tutorials!</p>
+<h1 style="color:white">MUSIC</h1>
+<h2 style="color:white">MUSIC</h2>
+    <div class="row">
+        <!-- Music Theory Basics -->
+        <div class="col-md-6 d-flex">
+            <div class="card p-3 shadow flex-fill">
+                <h2>🎼 Music Theory Basics</h2>
+                <p>Learn about scales, chords, rhythm, and tempo.</p>
+                <a href="/lessons" class="btn btn-primary w-100">View Lessons</a>
+            </div>
+        </div>
 
-<section>
-    <h2>🎼 Music Theory Basics</h2>
-    <p>Learn about scales, chords, rhythm, and tempo.</p>
-    <a href="/lessons"><button>View Lessons</button></a>
-</section>
+        <!-- Video Tutorials -->
+        <div class="col-md-6 d-flex">
+            <div class="card p-3 shadow flex-fill text-center">
+                <h2>📺 Video Tutorials</h2>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/AmC_qmSODEk" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
 
-<section>
-    <h2>📺 Video Tutorials</h2>
-    <iframe width="560" height="315" src="https://youtu.be/AmC_qmSODEk?si=gCaJgRhc3egxbOiU" frameborder="0" allowfullscreen></iframe>
-</section>
-
-<a href="/dashboard"><button>Back to Dashboard</button></a>
+    <!-- Back to Dashboard Button -->
+    <div class="text-center mt-4">
+        <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
 {% endblock %}
