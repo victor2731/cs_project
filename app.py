@@ -2,7 +2,6 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, session
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
-from helpers import login_required
 import os
 from werkzeug.utils import secure_filename
 
@@ -76,7 +75,6 @@ def login():
 
 # ---------------------- Student Dashboard ----------------------
 @app.route("/dashboard")
-@login_required
 def dashboard():
     if "user_id" not in session:
         return redirect("/login")
@@ -95,7 +93,6 @@ def dashboard():
 
 # ---------------------- Teacher Login ----------------------
 @app.route("/teacher_login", methods=["GET", "POST"])
-@login_required
 def teacher_login():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -115,7 +112,6 @@ def teacher_login():
 
 # ---------------------- Teacher Dashboard ----------------------
 @app.route("/teacher_dashboard")
-@login_required
 def teacher_dashboard():
     if "teacher_id" not in session:
         return redirect("/teacher_login")
@@ -141,7 +137,6 @@ def teacher_dashboard():
 
 # ---------------------- Assign Tasks to Students ----------------------
 @app.route("/assign_task", methods=["POST"])
-@login_required
 def assign_task():
     if "teacher_id" not in session:
         return redirect("/teacher_login")
@@ -170,16 +165,13 @@ def logout():
 
 # ---------------------- Learning Routes ----------------------
 @app.route("/learning")
-@login_required
 def learning():
     return render_template("learning.html")
 
 @app.route("/quiz")
-@login_required
 def quiz():
     return render_template("quiz.html")
 @app.route("/submit_quiz", methods=["POST"])
-@login_required
 def submit_quiz():
     if "user_id" not in session:
         return redirect("/login")
@@ -212,17 +204,14 @@ def submit_quiz():
     return redirect("/dashboard")
 
 @app.route("/practice")
-@login_required
 def practice():
     return render_template("practice.html")
 
 @app.route("/lessons")
-@login_required
 def lessons():
     return render_template("lessons.html")
 # ---------------------- Student doubts ----------------------
 @app.route("/student_doubts", methods=["POST"])
-@login_required
 def student_doubts():
     if "user_id" not in session:
         return redirect("/login")
@@ -242,7 +231,6 @@ def student_doubts():
     return redirect("/dashboard")
 # ---------------------- Student Submits Task ----------------------
 @app.route("/submit_task", methods=["POST"])
-@login_required
 def submit_task():
     if "user_id" not in session:
         return redirect("/login")
@@ -270,7 +258,6 @@ def submit_task():
 
     # ---------------------- validate submissions ----------------------
 @app.route("/validate_submission", methods=["POST"])
-@login_required
 def validate_submission():
     if "teacher_id" not in session:
         return redirect("/teacher_login")

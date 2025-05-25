@@ -25,38 +25,64 @@
      {% block content %}
      <!-- Hero Section -->
   
-    <!-- Image Carousel -->
-    <section class="container-fluid">
-        <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="static/pic1.png" class="d-block w-100 car" alt="Image 1">
-                </div>
-                <div class="carousel-item">
-                    <img src="static/pic2.png" class="d-block w-100 car" alt="Image 2">
-                </div>
-                <div class="carousel-item">
-                    <img src="static/pic3.png" class="d-block w-100 car" alt="Image 3">
-                </div>
-                <div class="carousel-item">
-                    <img src="static/pic4.png" class="d-block w-100 car" alt="Image 4">
+<!-- Image Carousel -->
+<section class="container-fluid">
+    <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+
+            <!-- First Slide -->
+            <div class="carousel-item active">
+                <img src="static/pic1.png" class="d-block w-100 car" alt="Image 1">
+                <div class="carousel-caption bg-dark bg-opacity-50 p-3 rounded">
+                    <h3 class="fw-bold text-white">🎶 Explore the Magic of Music!</h3>
+                    <p class="text-light">Join us and elevate your skills in rhythm and melody.</p>
                 </div>
             </div>
 
-            <!-- Navigation Buttons -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+            <!-- Second Slide -->
+            <div class="carousel-item">
+                <img src="static/pic2.png" class="d-block w-100 car" alt="Image 2">
+                <div class="carousel-caption bg-dark bg-opacity-50 p-3 rounded">
+                    <h3 class="fw-bold text-white">🎸 Learn from Top Instructors!</h3>
+                    <p class="text-light">Structured courses designed to master your instrument.</p>
+                </div>
+            </div>
+
+            <!-- Third Slide -->
+            <div class="carousel-item">
+                <img src="static/pic3.png" class="d-block w-100 car" alt="Image 3">
+                <div class="carousel-caption bg-dark bg-opacity-50 p-3 rounded">
+                    <h3 class="fw-bold text-white">🎼 Perform & Grow!</h3>
+                    <p class="text-light">Showcase your progress and receive expert guidance.</p>
+                </div>
+            </div>
+
+            <!-- Fourth Slide -->
+            <div class="carousel-item">
+                <img src="static/pic4.png" class="d-block w-100 car" alt="Image 4">
+                <div class="carousel-caption bg-dark bg-opacity-50 p-3 rounded">
+                    <h3 class="fw-bold text-white">🌟 Join Our Music Academy Today!</h3>
+                    <p class="text-light">Unlock your true musical potential with personalized mentorship.</p>
+                </div>
+            </div>
+
         </div>
-    </section>
+
+        <!-- Navigation Buttons -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</section>
+
 
     <!-- Courses Section -->
     <section class="container text-center mt-5" id="OurExperts">
         <div>
-             <h2><b>🎼 Meet Our Experts</b></h2>
+             <h2><b>Meet Our Experts</b></h2>
         </div>
        
         <div class="row">
@@ -96,7 +122,7 @@
     <!-- About Section -->
 <section id="About" class="container text-center mt-5">
     <div>
-        <h2><b>🎵 About Us</b></h2> 
+        <h2><b>About Us</b></h2> 
     </div>
    
     <p class="lead">Welcome to <strong>Music School</strong>, where passion meets excellence! Our mission is to provide high-quality music education tailored to every learner.</p>
@@ -138,7 +164,7 @@
                 <i class="fas fa-envelope"></i>
             </a>
         </div>
-         <p>&copy; 2025 Music School | All Rights Reserved</p>
+         <p> &copy; 2025 Music School | All Rights Reserved</p>
     </div>
 </section>
     <!-- Bootstrap JS -->
