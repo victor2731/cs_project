@@ -20,5 +20,5 @@ Built using **Flask** for backend functionality, **SQLite** for database managem
 - **Interactivity**: JavaScript & Animations  
 
 ## project url 
-
-url: https://github.com/victor2731/cs_project.git
+Demonstration Video URL: https://youtu.be/BksGBWGs3ls
+URL: https://github.com/victor2731/cs_project.git
